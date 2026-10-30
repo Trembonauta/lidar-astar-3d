@@ -3,6 +3,8 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 LAZ_PATH = BASE_DIR / "data" / "points.laz"
+OUTPUT_DIR = BASE_DIR / "outputs"
+IMAGES_DIR = OUTPUT_DIR / "images"
 
 AMOSTRAGEM = 10
 
@@ -21,10 +23,6 @@ RECORTE = {
 VOXEL_SIZE = 5.0
 VISUALIZAR_VOXELS = True
 
-# Configuração da inflação
-INFLAR_OBSTACULOS = False
-MARGEM_SEGURANCA = 0.0
-
 # Início e fim do A*
 START_REAL = (100.0, 100.0, 120.0)
 GOAL_REAL = (3200.0, 2000.0, 250.0)
@@ -32,10 +30,8 @@ GOAL_REAL = (3200.0, 2000.0, 250.0)
 # Configuração do FUZZY
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-FUZZY_CSV_PATH = (
-    f"outputs/trajetoria_fuzzy_{timestamp}.csv"
-)
+FUZZY_CSV_PATH = OUTPUT_DIR / "trajectories" / f"trajetoria_fuzzy_{timestamp}.csv"
 FUZZY_TOTAL_TIME = 800.0
 
 # Estatísticas da rota
-PATH_STATS_PATH = f"outputs/estatisticas_rota_{timestamp}.json"
+PATH_STATS_PATH = OUTPUT_DIR / "metrics" / f"estatisticas_rota_{timestamp}.json"

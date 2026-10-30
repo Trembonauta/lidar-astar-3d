@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
@@ -46,6 +48,8 @@ def salvar_trajetoria_fuzzy_csv(caminho, caminho_csv, total_time=800.0):
         total_time=total_time
     )
 
+    caminho_csv = Path(caminho_csv)
+    caminho_csv.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(caminho_csv, index=False)
 
     print("\n===== CSV FUZZY GERADO =====")

@@ -1,6 +1,6 @@
 BIBLIOTECAS E INSTALAÇÃO — PROJETO LAZ MÉTRICAS
 
-Lista elaborada a partir dos imports de main.py, teste_lidar.py e modules/.
+Lista elaborada a partir dos imports de main.py, scripts/teste_lidar.py e modules/.
 
 1. PREPARAR O AMBIENTE (WINDOWS / POWERSHELL)
 

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import laspy
 import numpy as np
 import open3d as o3d
@@ -8,7 +10,7 @@ import matplotlib.pyplot as plt
 # CONFIGURAÇÕES
 # =========================
 
-arquivo_laz = "points.laz"
+arquivo_laz = Path(__file__).resolve().parents[1] / "data" / "points.laz"
 
 # Use valores maiores se estiver pesado
 amostragem = 10  # pega 1 ponto a cada 10

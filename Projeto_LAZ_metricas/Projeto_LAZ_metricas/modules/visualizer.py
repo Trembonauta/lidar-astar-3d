@@ -1,6 +1,29 @@
+from datetime import datetime
+import re
+
+from config import IMAGES_DIR
+
 import open3d as o3d
 import numpy as np
 import matplotlib.pyplot as plt
+
+
+def _criar_visualizador(nome_janela):
+    """Direciona o atalho P de captura para a pasta de imagens do projeto."""
+    vis = o3d.visualization.VisualizerWithKeyCallback()
+
+    def salvar_captura(visualizador):
+        IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+        nome = re.sub(r"[^a-zA-Z0-9_-]+", "_", nome_janela).strip("_") or "mapa"
+        instante = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+        destino = IMAGES_DIR / f"{nome}_{instante}.png"
+        visualizador.capture_screen_image(str(destino), do_render=True)
+        print(f"Imagem salva em: {destino}")
+        return False
+
+    vis.register_key_callback(ord("P"), salvar_captura)
+    print(f"Pressione P na janela para salvar uma imagem em {IMAGES_DIR}")
+    return vis
 
 
 def visualizar_3d(pontos, nome_janela="Visualizador 3D"):
@@ -27,7 +50,7 @@ def visualizar_3d(pontos, nome_janela="Visualizador 3D"):
     cores = plt.cm.terrain(z_norm)[:, :3]
     pcd.colors = o3d.utility.Vector3dVector(cores)
 
-    vis = o3d.visualization.Visualizer()
+    vis = _criar_visualizador(nome_janela)
     vis.create_window(
         window_name=nome_janela,
         width=1280,
@@ -82,7 +105,7 @@ def visualizar_3d_com_caminho(pontos, caminho, nome_janela="Mapa 3D com caminho"
     fim.translate(caminho[-1])
     fim.paint_uniform_color([0.0, 0.0, 1.0])
 
-    vis = o3d.visualization.Visualizer()
+    vis = _criar_visualizador(nome_janela)
     vis.create_window(
         window_name=nome_janela,
         width=1280,
@@ -154,7 +177,7 @@ def visualizar_3d_com_dois_caminhos(
     fim.translate(caminho_bruto[-1])
     fim.paint_uniform_color([1.0, 1.0, 0.0])
 
-    vis = o3d.visualization.Visualizer()
+    vis = _criar_visualizador(nome_janela)
     vis.create_window(
         window_name=nome_janela,
         width=1280,

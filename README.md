@@ -46,7 +46,16 @@ em `config.py`, de acordo com os dados utilizados. Execute na mesma pasta:
 
 As janelas de visualização são interativas; feche a janela atual para
 permitir que o programa prossiga para a próxima etapa. As saídas são
-gravadas em `outputs/`, relativamente ao diretório de execução.
+gravadas na pasta `outputs/` ao lado de `main.py`, independentemente do
+diretório de execução:
+
+- `outputs/images/`: capturas das janelas do programa principal, usando **P**.
+- `outputs/metrics/`: estatísticas em JSON.
+- `outputs/trajectories/`: trajetórias em CSV.
+- `outputs/cameras/legacy/`: configurações de câmera antigas preservadas.
+
+As subpastas são criadas quando necessárias. Arquivos anteriores à organização
+foram preservados em subpastas `legacy/`; as saídas não são versionadas.
 
 ## Estrutura
 
@@ -56,10 +65,10 @@ Projeto_LAZ_metricas/Projeto_LAZ_metricas/
   config.py                    # Parâmetros e caminhos
   requirements.txt             # Versões das dependências diretas
   INSTALACAO_BIBLIOTECAS.txt    # Orientações detalhadas de instalação
-  teste_lidar.py               # Script exploratório de visualização
+  scripts/teste_lidar.py       # Script exploratório, separado da execução principal
   modules/                     # Leitura, processamento, A*, métricas e exportação
   data/                        # Dados locais, não versionados
-  outputs/                     # Resultados locais, não versionados
+  outputs/                     # images/, metrics/, trajectories/ e cameras/
 ```
 
 A estrutura original com duas pastas de mesmo nome foi preservada nesta
