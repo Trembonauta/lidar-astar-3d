@@ -1,0 +1,111 @@
+BIBLIOTECAS E INSTALAÇÃO — PROJETO LAZ MÉTRICAS
+
+Lista elaborada a partir dos imports de main.py, teste_lidar.py e modules/.
+
+1. PREPARAR O AMBIENTE (WINDOWS / POWERSHELL)
+
+Ambiente escolhido: Python 3.11.9 de 64 bits.
+Instalação verificada em 30/10/2026: imports OK, pip check sem conflitos e leitura de 10 pontos do arquivo LAZ concluída.
+As bibliotecas já estão instaladas no ambiente .venv deste projeto.
+Não é necessário repetir a instalação para executar o programa.
+
+IMPORTANTE: existem duas pastas consecutivas chamadas Projeto_LAZ_metricas.
+Os comandos relativos abaixo precisam ser executados na pasta INTERNA,
+a mesma que contém main.py. Para chegar a ela de qualquer terminal:
+
+    Set-Location -LiteralPath 'C:\Users\rhuan\Documents\ChatGPT\TCC_Lidar\Projeto_LAZ_metricas\Projeto_LAZ_metricas'
+
+Para executar com as bibliotecas já instaladas:
+
+    .\.venv\Scripts\python.exe main.py
+
+Os comandos de criação e instalação abaixo são para recriar o ambiente,
+se isso for necessário no futuro. Execute um comando por vez:
+
+    py -3.11 -m venv .venv
+    .\.venv\Scripts\python.exe -m pip install --upgrade pip
+
+Se a criação do ambiente falhar, resolva o primeiro erro antes de continuar.
+
+Os comandos abaixo usam o Python desse ambiente diretamente, sem precisar
+ativá-lo ou alterar a política de execução do PowerShell.
+
+2. INSTALAR TODAS AS DEPENDÊNCIAS
+
+    .\.venv\Scripts\python.exe -m pip install numpy "laspy[lazrs]>=2,<3" open3d matplotlib scipy pandas tqdm
+
+O pip também instala automaticamente as dependências indiretas desses pacotes.
+
+3. BIBLIOTECAS, FINALIDADES E COMANDOS INDIVIDUAIS
+
+NumPy (import numpy): operações numéricas, coordenadas e grades de voxels.
+    .\.venv\Scripts\python.exe -m pip install numpy
+
+Laspy (import laspy): leitura dos arquivos LAS/LAZ.
+Lazrs: suporte à descompressão de LAZ, instalado pelo extra laspy[lazrs].
+Instalar apenas laspy não garante suporte a arquivos comprimidos LAZ.
+    .\.venv\Scripts\python.exe -m pip install "laspy[lazrs]>=2,<3"
+
+Open3D (import open3d): visualização tridimensional da nuvem e dos caminhos.
+    .\.venv\Scripts\python.exe -m pip install open3d
+
+Matplotlib (import matplotlib.pyplot): gráficos e mapas de cores.
+    .\.venv\Scripts\python.exe -m pip install matplotlib
+
+SciPy (scipy.interpolate e scipy.spatial): suavização por splines e cKDTree
+para consultas de distância usadas nas métricas dos caminhos.
+    .\.venv\Scripts\python.exe -m pip install scipy
+
+Pandas (import pandas): exportação de trajetórias para CSV.
+    .\.venv\Scripts\python.exe -m pip install pandas
+
+Tqdm (from tqdm import tqdm): barra de progresso do planejamento A*.
+    .\.venv\Scripts\python.exe -m pip install tqdm
+
+Prefira o comando único da seção 2: ele aplica as restrições de compatibilidade
+na mesma instalação.
+
+4. COMPATIBILIDADE
+
+O projeto usa Python 3.11.9 de 64 bits, com suporte binário às dependências
+Open3D e Lazrs. Os testes de instalação com Python 3.15 não encontraram
+pacotes binários compatíveis para Open3D, Lazrs ou LASzip.
+O teste de visualização usa np.ptp(pontos[:, 2]), compatível com NumPy 2.
+A execução completa do planejamento e das janelas 3D deve ser validada
+separadamente dos testes de imports e de leitura LAZ.
+
+5. MÓDULOS QUE NÃO PRECISAM SER INSTALADOS
+
+datetime, pathlib, heapq, time e json pertencem à biblioteca padrão do Python.
+config e modules.* são arquivos locais do próprio projeto.
+O código analisado não importa uma biblioteca externa de lógica fuzzy;
+a exportação para a simulação usa NumPy e Pandas.
+
+6. VERIFICAR A INSTALAÇÃO E EXECUTAR
+
+Verificar conflitos entre dependências:
+    .\.venv\Scripts\python.exe -m pip check
+
+Verificar imports e disponibilidade de um backend LAZ:
+    .\.venv\Scripts\python.exe -c "import numpy, laspy, lazrs, open3d, matplotlib, scipy, pandas, tqdm; print('Imports OK'); print('Backends LAZ:', laspy.LazBackend.detect_available())"
+
+Executar o programa principal a partir da pasta que contém main.py:
+    .\.venv\Scripts\python.exe main.py
+
+Antes da execução, confira o caminho do arquivo LAZ e os parâmetros em config.py.
+A verificação dos imports não valida o processamento completo nem as janelas 3D.
+
+7. REFERÊNCIAS DE COMPATIBILIDADE
+
+Suporte LAZ no Laspy:
+https://laspy.readthedocs.io/en/latest/installation.html
+
+Remoção do método ndarray.ptp no NumPy 2:
+https://numpy.org/doc/2.0/numpy_2_0_migration_guide.html
+
+Distribuições de desenvolvimento do Open3D:
+https://open3d.org/docs/latest/dev_wheels.html
+
+
+
+

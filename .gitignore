@@ -1,0 +1,27 @@
+# Ambientes Python e cache
+.venv/
+.venv-*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Configurações locais e credenciais
+.vscode/
+.env
+.env.*
+!.env.example
+
+# Nuvens LiDAR: disponibilizar separadamente, com origem e permissão de uso
+*.laz
+*.las
+
+# Saídas de execução e capturas locais
+outputs/
+ScreenCamera_*.json
+ScreenCapture_*.png
+
+# Metadados do sistema
+desktop.ini
+Thumbs.db
+.DS_Store
