@@ -77,6 +77,9 @@ separadamente dos testes de imports e de leitura LAZ.
 5. MÓDULOS QUE NÃO PRECISAM SER INSTALADOS
 
 datetime, pathlib, heapq, time e json pertencem à biblioteca padrão do Python.
+As interfaces também usam tkinter, multiprocessing, threading, queue,
+concurrent.futures, sqlite3, hashlib, tempfile e zlib, da biblioteca padrão.
+Não use pip para instalar esses módulos. A bancada 3D usa o Open3D já instalado.
 config e modules.* são arquivos locais do próprio projeto.
 O código analisado não importa uma biblioteca externa de lógica fuzzy;
 a exportação para a simulação usa NumPy e Pandas.

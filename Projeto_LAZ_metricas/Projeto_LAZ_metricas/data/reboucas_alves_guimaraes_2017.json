@@ -1,0 +1,30 @@
+{
+  "data_preparacao": "2026-11-04",
+  "portal": "https://novogeosampa.prefeitura.sp.gov.br/",
+  "camada": "Modelo Digital de Superfície - MDS 2017 - Articulação",
+  "fontes": [
+    {
+      "arquivo": "3314-153.laz",
+      "pontos": 5060026
+    },
+    {
+      "arquivo": "3314-154.laz",
+      "pontos": 5223016
+    }
+  ],
+  "saida": "reboucas_alves_guimaraes_2017.laz",
+  "total_pontos": 10283042,
+  "versao_las_saida": "1.2",
+  "limites_min": [
+    328824.86,
+    7393205.83,
+    748.08
+  ],
+  "limites_max": [
+    329898.95,
+    7393799.0,
+    881.95
+  ],
+  "operacao": "Concatenação sem amostragem, transformação ou remoção de duplicados.",
+  "referencia_espacial": "Preservada das fontes; CRS não identificado no cabeçalho."
+}

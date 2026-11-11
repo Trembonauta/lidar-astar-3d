@@ -51,6 +51,7 @@ def astar_3d(
     dimensoes,
     retornar_estatisticas=False,
     mostrar_progresso=True,
+    informar_busca=None,
 ):
     """
     A* 3D usando voxels ocupados como obstáculos.
@@ -85,6 +86,21 @@ def astar_3d(
     iteracoes = 0
     max_fila_aberta = len(open_set)
     inicio_tempo = time.perf_counter()
+    ultimo_envio = inicio_tempo
+    tempo_envio = 0.
+
+    def emitir(atual, final=False):
+        nonlocal ultimo_envio, tempo_envio
+        if informar_busca is None:
+            return
+        agora = time.perf_counter()
+        if not final and agora-ultimo_envio < .15:
+            return
+        informar_busca(dict(caminho=np.asarray(reconstruir_caminho(came_from, atual), dtype=np.int32),
+                            atual=atual, visitados=len(visitados), fila=len(open_set),
+                            tempo_s=agora-inicio_tempo, final=final))
+        ultimo_envio = agora
+        tempo_envio += time.perf_counter()-agora
 
     barra = None
     if mostrar_progresso:
@@ -107,8 +123,12 @@ def astar_3d(
             continue
 
         visitados.add(atual)
+        if informar_busca is not None:
+            if len(visitados) % 64 == 0:
+                emitir(atual)
 
         if atual == goal:
+            emitir(atual, final=True)
             if barra is not None:
                 barra.close()
 
@@ -118,6 +138,7 @@ def astar_3d(
             estatisticas = {
                 "encontrou_caminho": True,
                 "tempo_planejamento_s": float(tempo),
+                "tempo_envio_animacao_s": float(tempo_envio),
                 "iteracoes": int(iteracoes),
                 "nos_visitados": int(len(visitados)),
                 "nos_descobertos": int(len(g_score)),
@@ -169,10 +190,12 @@ def astar_3d(
     if barra is not None:
         barra.close()
 
+    emitir(atual, final=True)
     tempo = time.perf_counter() - inicio_tempo
     estatisticas = {
         "encontrou_caminho": False,
         "tempo_planejamento_s": float(tempo),
+        "tempo_envio_animacao_s": float(tempo_envio),
         "iteracoes": int(iteracoes),
         "nos_visitados": int(len(visitados)),
         "nos_descobertos": int(len(g_score)),

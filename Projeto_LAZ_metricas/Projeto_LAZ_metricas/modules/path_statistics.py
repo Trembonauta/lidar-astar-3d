@@ -36,8 +36,8 @@ def validar_colisao_caminho(caminho, occupied_voxels, voxel_size, passo=None):
     """
     Verifica segmentos do caminho por amostragem espacial.
 
-    O teste é aplicado ao caminho contínuo, e não apenas aos nós do A*.
-    Isso é especialmente importante após a suavização por spline.
+    Amostra os segmentos entre pontos da trajetória, inclusive após a spline.
+    Não constitui uma verificação contínua exata.
     """
     caminho = np.asarray(caminho, dtype=float)
 
@@ -48,6 +48,8 @@ def validar_colisao_caminho(caminho, occupied_voxels, voxel_size, passo=None):
         raise ValueError("O passo de validação deve ser positivo.")
 
     voxels_em_colisao = set()
+    pontos_colisao = []
+    segmentos_colisao = set()
     total_amostras = 0
 
     for i in range(len(caminho) - 1):
@@ -59,16 +61,20 @@ def validar_colisao_caminho(caminho, occupied_voxels, voxel_size, passo=None):
         amostras = np.linspace(p0, p1, n)
         indices = np.floor(amostras / voxel_size).astype(np.int32)
 
-        for indice in indices:
+        for ponto, indice in zip(amostras, indices):
             total_amostras += 1
             voxel = tuple(indice)
             if voxel in occupied_voxels:
                 voxels_em_colisao.add(voxel)
+                pontos_colisao.append(ponto.tolist())
+                segmentos_colisao.add(i)
 
     return {
         "livre_de_colisao": len(voxels_em_colisao) == 0,
         "quantidade_voxels_colisao": len(voxels_em_colisao),
         "voxels_colisao": sorted(voxels_em_colisao),
+        "pontos_colisao_m": pontos_colisao,
+        "segmentos_colisao": sorted(segmentos_colisao),
         "passo_validacao_m": float(passo),
         "total_amostras_testadas": int(total_amostras),
     }

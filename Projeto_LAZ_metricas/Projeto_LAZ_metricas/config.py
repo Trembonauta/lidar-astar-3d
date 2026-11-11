@@ -2,7 +2,13 @@ from datetime import datetime
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-LAZ_PATH = BASE_DIR / "data" / "points.laz"
+LAZ_PATH = BASE_DIR / "data" / "reboucas_alves_guimaraes_2017.laz"
+TEST_MAP_PATH = LAZ_PATH
+# Origem do mapa unificado e posições da configuração inicial de testes.
+ORIGEM_NORMALIZACAO = (328824.86, 7393205.83, 748.08)
+TEST_START_ORIGINAL = (328995.300, 7393497.750, 777.670)
+TEST_GOAL_ORIGINAL = (329767.120, 7393756.160, 808.140)
+TEST_HEIGHT = 5.0
 OUTPUT_DIR = BASE_DIR / "outputs"
 IMAGES_DIR = OUTPUT_DIR / "images"
 
@@ -20,12 +26,12 @@ RECORTE = {
 }
 
 # Voxelização
-VOXEL_SIZE = 5.0
+VOXEL_SIZE = 3.0
 VISUALIZAR_VOXELS = True
 
 # Início e fim do A*
-START_REAL = (100.0, 100.0, 120.0)
-GOAL_REAL = (3200.0, 2000.0, 250.0)
+START_REAL = (170.440, 291.920, 29.590)
+GOAL_REAL = (942.260, 550.330, 60.060)
 
 # Configuração do FUZZY
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
